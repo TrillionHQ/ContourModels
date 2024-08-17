@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edge Detection with TensorFlow.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+</head>
+
+<body>
+    <video id="webcam" autoplay width="640" height="480"></video>
+    <canvas id="output" width="640" height="480"></canvas>
+
+    <script>
+        const script = document.createElement('script');
+        if (window.location.search.includes('?3')) {
+            script.src = 'handle_3l.js';
+        } else {
+            script.src = 'handle_2l.js';
+        }
+        document.head.appendChild(script);
+    </script>
+</body>
+
+</html>
