@@ -1,2 +1,7 @@
 # Parameters
-- run with /?3 for three-layered DexiNed, two layered model is default
+- start http-server
+- goto http://127.0.0.1 for two-blocks DexiNed
+- goto http://127.0.0.1/?3 for three-blocks DexiNed
+- goto http://127.0.0.1/?teed for Teed
+
+track performance in dev console

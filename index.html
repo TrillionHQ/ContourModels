@@ -14,7 +14,11 @@
         const script = document.createElement('script');
         if (window.location.search.includes('?3')) {
             script.src = 'handle_3l.js';
-        } else {
+        } 
+        else if (window.location.search.includes('?teed')){
+            script.src = 'handle_teed.js';
+        }
+        else {
             script.src = 'handle_2l.js';
         }
         document.head.appendChild(script);

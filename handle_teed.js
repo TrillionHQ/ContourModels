@@ -15,14 +15,14 @@ async function setupCamera() {
 }
 
 async function loadModel() {
-    const model = await tf.loadGraphModel('model_3l_tfjs/model.json');
+    const model = await tf.loadGraphModel('teed_model_tfjs/model.json');
     return model;
 }
 
 function preprocessImage(imageData) {
     return tf.tidy(() => {
         let inputTensor = tf.browser.fromPixels(imageData)
-            .resizeBilinear([512, 512])
+            .resizeBilinear([352, 352])
             .toFloat()
         // Subtract the mean values
         const mean = tf.tensor([103.939, 116.779, 123.68]);
@@ -56,7 +56,7 @@ async function detectEdges(model) {
 
     const output = Array.isArray(outputTensor) ? tf.sigmoid(outputTensor[3]) : outputTensor;
 
-    const startTime2 = performance.now();
+//    const startTime2 = performance.now();
 
     const [min, max] = tf.tidy(() => {
         const min = output.min();
@@ -85,8 +85,8 @@ async function detectEdges(model) {
     // Clean up the remaining tensors
     tf.dispose([normalizedOutput, scaledOutput, reshapedOutput, resizedOutput]);
 
-    const endTime2 = performance.now();
-    console.log(`Execution time resizing output: ${endTime2 - startTime2} milliseconds`);
+    //const endTime2 = performance.now();
+    //console.log(`Execution time resizing output: ${endTime2 - startTime2} milliseconds`);
     const finalOutputData = new Uint8ClampedArray(canvas.width * canvas.height * 4);
     for (let i = 0; i < canvas.height; i++) {
         for (let j = 0; j < canvas.width; j++) {

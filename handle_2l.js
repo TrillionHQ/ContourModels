@@ -17,6 +17,7 @@ async function setupCamera() {
 
 async function loadModel() {
     const model = await tf.loadGraphModel('model_2l_tfjs/model.json');
+    
     return model;
 }
 
@@ -56,6 +57,9 @@ async function detectEdges(model) {
     console.log(`Execution time inference: ${endTime1 - startTime1} milliseconds`);
 
     const output = Array.isArray(outputTensor) ? tf.sigmoid(outputTensor[2]) : outputTensor;
+
+    const endTime3 = performance.now();
+    console.log(`Execution time sigmoid: ${endTime3 - startTime} milliseconds`);
 
     const startTime2 = performance.now();
 
