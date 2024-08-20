@@ -34,6 +34,11 @@
                 size = 352;
                 output_block = 3;
                 break;
+            case searchParams.includes('?teed_tflite'):
+                path = 'teed.tflite';
+                size = 352;
+                output_block = 3;
+                break;
             default:
                 path = 'model_2l_tfjs/model.json';
                 output_block = 2;

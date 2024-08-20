@@ -16,7 +16,16 @@ async function setupCamera() {
 }
 
 async function loadModel() {
-    const model = await tf.loadGraphModel(path);
+    let model = null
+
+    if (path != 'teed.tflite') {
+        model = await tf.loadGraphModel(path);
+    }
+    else {
+        const response = await fetch('teed.tflite');
+        const buffer = await response.arrayBuffer();
+        model = await tflite.loadTFLiteModel(buffer);
+    }
     return model;
 }
 
@@ -42,7 +51,7 @@ function preprocessImage(imageData) {
 }
 
 async function detectEdges(model) {
-    const startTime = performance.now();
+    //const startTime = performance.now();
 
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
@@ -50,7 +59,14 @@ async function detectEdges(model) {
     console.log("Model execution start");
 
     const startTime1 = performance.now();
-    const outputTensor = await model.execute({ input: inputTensor });
+    let outputTensor = null
+    if (path != 'teed.tflite') {
+        outputTensor = await model.execute({ input: inputTensor });
+    }
+    else {
+        outputTensor = await model.predict(inputTensor);
+    }
+
     console.log("Model execution complete.");
     const endTime1 = performance.now();
     console.log(`Execution time inference: ${endTime1 - startTime1} milliseconds`);
