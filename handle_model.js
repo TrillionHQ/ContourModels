@@ -16,12 +16,11 @@ async function setupCamera() {
 }
 
 async function loadModel() {
-    let model = null
+    let model = null;
 
     if (path != 'teed.tflite') {
         model = await tf.loadGraphModel(path);
-    }
-    else {
+    } else {
         const response = await fetch('teed.tflite');
         const buffer = await response.arrayBuffer();
         model = await tflite.loadTFLiteModel(buffer);
@@ -133,10 +132,20 @@ async function detectEdges(model) {
 
 
 
-
+async function initializeBackend() {
+    const success = await tf.setBackend('wasm');
+    if (!success) {
+        console.error("Failed to set backend to wasm. Falling back to webgl.");
+        await tf.setBackend('webgl');
+    }
+    await tf.ready();
+    console.log(`Using backend: ${tf.getBackend()}`);
+}
 
 async function main() {
-
+    console.log("Initializing WebAssembly backend...");
+    await initializeBackend();
+    console.log("WebAssembly backend initialized.");
 
     console.log("Setting up camera...");
     await setupCamera();
@@ -145,11 +154,8 @@ async function main() {
     const model = await loadModel();
     console.log("Model Loaded.");
 
-    // Проверка бэкэнда
-    const backend = tf.getBackend();
-    console.log(`Current backend: ${backend}`);
-
     detectEdges(model);
 }
+
 
 main();

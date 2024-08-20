@@ -3,7 +3,14 @@
 
 <head>
     <title>Edge Detection with TensorFlow.js</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
+    "></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.20.0/dist/tf-backend-wasm.min.js"></script>
+    
+
+   
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-tflite"></script>
+
 </head>
 
 <body>
@@ -48,7 +55,7 @@
 
 
         script.src = 'handle_model.js';
-        
+
         document.head.appendChild(script);
     </script>
 
