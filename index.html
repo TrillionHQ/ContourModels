@@ -12,17 +12,42 @@
 
     <script>
         const script = document.createElement('script');
-        if (window.location.search.includes('?3')) {
-            script.src = 'handle_3l.js';
-        } 
-        else if (window.location.search.includes('?teed')){
-            script.src = 'handle_teed.js';
+        const searchParams = window.location.search;
+        script.src = 'handle_model.js';
+        let path = null;
+        let size = null;
+        let output_block = null;
+
+        switch (true) {
+            case searchParams.includes('?3'):
+                path = 'model_3l_tfjs/model.json';
+                size = 512;
+                output_block = 3;
+                break;
+            case searchParams.includes('?teed16'):
+                path = 'teed_model_tfjs_16/model.json';
+                size = 352;
+                output_block = 3;
+                break;
+            case searchParams.includes('?teed'):
+                path = 'teed_model_tfjs/model.json';
+                size = 352;
+                output_block = 3;
+                break;
+            default:
+                path = 'model_2l_tfjs/model.json';
+                output_block = 2;
+                size = 352;
+                break;
         }
-        else {
-            script.src = 'handle_2l.js';
-        }
+
+
+        script.src = 'handle_model.js';
+        
         document.head.appendChild(script);
     </script>
+
+    <script></script>
 </body>
 
 </html>
