@@ -2,6 +2,7 @@ const video = document.getElementById('webcam');
 const canvas = document.getElementById('output');
 const context = canvas.getContext('2d', { willReadFrequently: true });
 
+
 async function setupCamera() {
     const stream = await navigator.mediaDevices.getUserMedia({
         video: true
@@ -15,14 +16,14 @@ async function setupCamera() {
 }
 
 async function loadModel() {
-    const model = await tf.loadGraphModel('model_3l_tfjs/model.json');
+    const model = await tf.loadGraphModel(path);
     return model;
 }
 
 function preprocessImage(imageData) {
     return tf.tidy(() => {
         let inputTensor = tf.browser.fromPixels(imageData)
-            .resizeBilinear([512, 512])
+            .resizeBilinear([size, size])
             .toFloat()
         // Subtract the mean values
         const mean = tf.tensor([103.939, 116.779, 123.68]);
@@ -54,9 +55,10 @@ async function detectEdges(model) {
     const endTime1 = performance.now();
     console.log(`Execution time inference: ${endTime1 - startTime1} milliseconds`);
 
-    const output = Array.isArray(outputTensor) ? tf.sigmoid(outputTensor[3]) : outputTensor;
+    //const output = Array.isArray(outputTensor) ? tf.sigmoid(outputTensor[3]) : outputTensor;
+    const output = outputTensor[output_block];
 
-    const startTime2 = performance.now();
+    //    const startTime2 = performance.now();
 
     const [min, max] = tf.tidy(() => {
         const min = output.min();
@@ -85,8 +87,8 @@ async function detectEdges(model) {
     // Clean up the remaining tensors
     tf.dispose([normalizedOutput, scaledOutput, reshapedOutput, resizedOutput]);
 
-    const endTime2 = performance.now();
-    console.log(`Execution time resizing output: ${endTime2 - startTime2} milliseconds`);
+    //const endTime2 = performance.now();
+    //console.log(`Execution time resizing output: ${endTime2 - startTime2} milliseconds`);
     const finalOutputData = new Uint8ClampedArray(canvas.width * canvas.height * 4);
     for (let i = 0; i < canvas.height; i++) {
         for (let j = 0; j < canvas.width; j++) {
@@ -118,6 +120,7 @@ async function detectEdges(model) {
 
 
 async function main() {
+
 
     console.log("Setting up camera...");
     await setupCamera();
