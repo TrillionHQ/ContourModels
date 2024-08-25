@@ -4,12 +4,9 @@
 <head>
     <title>Edge Detection with TensorFlow.js</title>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
-    "></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.20.0/dist/tf-backend-wasm.min.js"></script>
-    
-
-   
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-tflite"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.20.0/dist/tf-backend-wasm.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-tflite@latest/dist/tf-tflite.min.js"></script>
 
 </head>
 
@@ -31,18 +28,33 @@
                 size = 512;
                 output_block = 3;
                 break;
-            case searchParams.includes('?teed16'):
+            case searchParams.includes('?teed16_json'):
                 path = 'teed_model_tfjs_16/model.json';
                 size = 352;
                 output_block = 3;
                 break;
-            case searchParams.includes('?teed'):
+            case searchParams.includes('?teed_json'):
                 path = 'teed_model_tfjs/model.json';
                 size = 352;
                 output_block = 3;
                 break;
-            case searchParams.includes('?teed_tflite'):
-                path = 'teed.tflite';
+            case searchParams.includes('?teed_tfl_ex_onnx'):
+                path = 'tflite_models/teed_ex_onnx.tflite';
+                size = 352;
+                output_block = 3;
+                break;
+            case searchParams.includes('?teed_tflite_dynamic_range'):
+                path = 'tflite_models/ted_model_quant_dynamic_range.tflite';
+                size = 352;
+                output_block = 3;
+                break;
+            case searchParams.includes('?teed_tflite_quant16'):
+                path = 'tflite_models/ted_model_quant_f16.tflite';
+                size = 352;
+                output_block = 3;
+                break;
+            case searchParams.includes('?teed_tflite_32'):
+                path = 'tflite_models/ted_model.tflite';
                 size = 352;
                 output_block = 3;
                 break;

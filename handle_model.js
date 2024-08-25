@@ -18,13 +18,28 @@ async function setupCamera() {
 async function loadModel() {
     let model = null;
 
-    if (path != 'teed.tflite') {
-        model = await tf.loadGraphModel(path);
-    } else {
-        const response = await fetch('teed.tflite');
-        const buffer = await response.arrayBuffer();
-        model = await tflite.loadTFLiteModel(buffer);
+    try {
+        if (!path.includes('tflite')) {
+            model = await tf.loadGraphModel(path);
+        } else {
+            const response = await fetch(path);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch model from ${path}: ${response.statusText}`);
+            }
+            const buffer = await response.arrayBuffer();
+            model = await tflite.loadTFLiteModel(buffer);
+        }
+
+        // Проверяем, что модель успешно загрузилась
+        if (!model) {
+            throw new Error('Model failed to load');
+        }
+        console.log('Model loaded successfully.');
+    } catch (error) {
+        console.error('Error loading the model:', error);
+        throw error; // Опционально, если нужно остановить выполнение в случае ошибки
     }
+
     return model;
 }
 
@@ -38,7 +53,9 @@ function preprocessImage(imageData) {
         inputTensor = inputTensor.sub(mean);
 
         // Transpose the tensor
-        inputTensor = inputTensor.transpose([2, 0, 1]);
+        if (!path.includes('tflite')) {
+            inputTensor = inputTensor.transpose([2, 0, 1]);
+        }
         inputTensor = inputTensor.expandDims(0);
 
 
@@ -59,7 +76,7 @@ async function detectEdges(model) {
 
     const startTime1 = performance.now();
     let outputTensor = null
-    if (path != 'teed.tflite') {
+    if (!path.includes('tflite')) {
         outputTensor = await model.execute({ input: inputTensor });
     }
     else {

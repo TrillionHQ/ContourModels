@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test loading TFLite</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.20.0/dist/tf-backend-wasm.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-tflite@latest/dist/tf-tflite.min.js"></script>
+
+
+</head>
+
+<body>
+    <script type="module">
+        const modelPath = 'tflite_models/ted_tflite_models/ted_model.tflite'
+
+        async function testLoadModel() {
+            await tf.setBackend('wasm');
+            await tf.ready();
+            console.log(tf.getBackend())
+
+            try {
+                const response = await fetch(modelPath);
+                const buffer = await response.arrayBuffer();
+                console.log("Array buffer length:", buffer.byteLength);
+
+                const model = await tflite.loadTFLiteModel(buffer);
+                console.log("Model loaded:", model);
+            } catch (error) {
+                console.error("Error loading the model:", error);
+            }
+        }
+
+        testLoadModel();
+
+    </script>
+</body>
