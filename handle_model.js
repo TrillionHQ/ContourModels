@@ -83,6 +83,7 @@ async function detectEdges(model) {
         outputTensor = await model.predict(inputTensor);
     }
 
+
     console.log("Model execution complete.");
     const endTime1 = performance.now();
     console.log(`Execution time inference: ${endTime1 - startTime1} milliseconds`);
@@ -138,11 +139,11 @@ async function detectEdges(model) {
     // Dispose tensors to free up memory
     inputTensor.dispose();
     resizedOutput.dispose();
-    if (Array.isArray(outputTensor)) {
+    /* if (Array.isArray(outputTensor)) {
         outputTensor.forEach(tensor => tensor.dispose());
     } else {
         outputTensor.dispose();
-    }
+    } */
 
     requestAnimationFrame(() => detectEdges(model));
 }

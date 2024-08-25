@@ -56,7 +56,7 @@
             case searchParams.includes('?teed_tflite_32'):
                 path = 'tflite_models/ted_model.tflite';
                 size = 352;
-                output_block = 3;
+                output_block = 'StatefulPartitionedCall:0';
                 break;
             default:
                 path = 'model_2l_tfjs/model.json';
