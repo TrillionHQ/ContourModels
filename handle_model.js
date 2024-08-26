@@ -88,8 +88,16 @@ async function detectEdges(model) {
     const endTime1 = performance.now();
     console.log(`Execution time inference: ${endTime1 - startTime1} milliseconds`);
 
-    //const output = Array.isArray(outputTensor) ? tf.sigmoid(outputTensor[3]) : outputTensor;
-    const output = outputTensor[output_block];
+    //const output = tf.sigmoid(outputTensor[output_block]);
+    let output = null
+    if (!path.includes('pruned')) {
+        output = outputTensor[output_block];
+
+    }
+    else {
+        output = outputTensor
+    }
+    
 
     //    const startTime2 = performance.now();
 
