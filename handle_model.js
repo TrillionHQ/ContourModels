@@ -97,7 +97,7 @@ async function detectEdges(model) {
     else {
         output = outputTensor
     }
-    
+
 
     //    const startTime2 = performance.now();
 
@@ -166,6 +166,7 @@ async function initializeBackend() {
     }
     await tf.ready();
     console.log(`Using backend: ${tf.getBackend()}`);
+    console.log(`Model path: ${path}`)
 }
 
 async function main() {

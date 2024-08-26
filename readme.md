@@ -13,4 +13,6 @@
 - goto https://127.0.0.1:8080/?teed_tflite_dynamic_range for Teed with dynamic range quntization
 - goto https://127.0.0.1:8080/?teed_tflite_quant16 for Teed with float16 quantization
 - goto https://127.0.0.1:8080/?teed_tflite_32 for tflite Teed ex tensorflow float32 model
-- goto https://127.0.0.1:8080/?teed_tflite_32_0 for output0 subgraph of Teed ex tensorflow float32 model
+- goto https://127.0.0.1:8080/?teed_tflite_32_0 for output0 float32 subgraph of Teed ex tensorflow float32 model
+- goto https://127.0.0.1:8080/?teed_tflite_16_0 for output0 float16 subgraph of Teed ex tensorflow float32 model
+- goto https://127.0.0.1:8080/?teed_tflite_dr_0 for output0 dynamic range subgraph of Teed ex tensorflow float32 model
