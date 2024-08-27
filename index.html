@@ -38,16 +38,17 @@
                 size = 352;
                 output_block = 3;
                 break;
+            case searchParams.includes('?teed_tfl_ex_onnx_output1'):
+                path = 'ex_onnx_pruned/model.json';
+                size = 352;
+                output_block = 3;
+                break;
             case searchParams.includes('?teed_tfl_ex_onnx'):
                 path = 'tflite_models/teed_ex_onnx.tflite';
                 size = 352;
                 output_block = 3;
                 break;
-            case searchParams.includes('?teed_tfl_ex_onnx_output1'):
-                path = 'tflite_models/teed_model_subgraph_extracted.onnx';
-                size = 352;
-                output_block = 3;
-                break;
+
             case searchParams.includes('?teed_tflite_dynamic_range'):
                 path = 'tflite_models/ted_model_quant_dynamic_range.tflite';
                 size = 352;
