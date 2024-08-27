@@ -38,6 +38,16 @@
                 size = 352;
                 output_block = 3;
                 break;
+                case searchParams.includes('?teed_tfl_ex_onnx_output1_optim_clust'):
+                path = 'ex_onnx_pruned_optimized_clustered/model.json';
+                size = 352;
+                output_block = 3;
+                break;
+                case searchParams.includes('?teed_tfl_ex_onnx_output1_optim'):
+                path = 'ex_onnx_pruned_optimized/model.json';
+                size = 352;
+                output_block = 3;
+                break;
             case searchParams.includes('?teed_tfl_ex_onnx_output1'):
                 path = 'ex_onnx_pruned/model.json';
                 size = 352;

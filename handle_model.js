@@ -159,11 +159,12 @@ async function detectEdges(model) {
 
 
 async function initializeBackend() {
-    const success = await tf.setBackend('wasm');
+    /* const success = await tf.setBackend('wasm');
     if (!success) {
         console.error("Failed to set backend to wasm. Falling back to webgl.");
         await tf.setBackend('webgl');
-    }
+    } */
+    await tf.setBackend('webgl');
     await tf.ready();
     console.log(`Using backend: ${tf.getBackend()}`);
     console.log(`Model path: ${path}`)
