@@ -1,6 +1,6 @@
 - start https-server
 
-# Not Daniil's models
+# Ex-Pytorch autoconverted models
 
 - goto https://127.0.0.1:8080 for two-blocks DexiNed
 - goto https://127.0.0.1:8080/?3 for three-blocks DexiNed
@@ -12,7 +12,7 @@
 - goto https://127.0.0.1:8080/?teed_tfl_ex_onnx_output1_clust for Teed ex ONNX with float16 subgraph output1 graph optimized by onnx python api & further weights clusterized (max weights 16) by sci-kit learn (model.json format)
 
 
-# Daniil's models
+# Tensorflow-translated Daniil's models
 
 - goto https://127.0.0.1:8080/?teed_tflite_dynamic_range for Teed with dynamic range quntization
 - goto https://127.0.0.1:8080/?teed_tflite_quant16 for Teed with float16 quantization
