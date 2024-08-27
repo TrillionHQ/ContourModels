@@ -7,6 +7,7 @@
 - goto https://127.0.0.1:8080/?teed_json for Teed
 - goto https://127.0.0.1:8080/?teed16_json for Teed with float16
 - goto https://127.0.0.1:8080/?teed_tfl_ex_onnx for tflite Teed ex ONNX with float16
+- goto https://127.0.0.1:8080/?teed_tfl_ex_onnx_output1 for tflite Teed ex ONNX with float16 subgraph output1
 
 # New Daniil's models
 
