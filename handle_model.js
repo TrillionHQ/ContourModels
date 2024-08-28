@@ -19,9 +19,10 @@ async function loadModel() {
     let model = null;
 
     try {
-        if (!path.includes('tflite')) {
+        if (!path.includes('tflite') && !path.includes('Daniils')) {
             model = await tf.loadGraphModel(path);
-        } else {
+        } 
+        else if(!path.includes('Daniils')){
             const response = await fetch(path);
             if (!response.ok) {
                 throw new Error(`Failed to fetch model from ${path}: ${response.statusText}`);
@@ -29,6 +30,11 @@ async function loadModel() {
             const buffer = await response.arrayBuffer();
             model = await tflite.loadTFLiteModel(buffer);
         }
+          else
+           {
+            model = await tf.loadLayersModel(path);
+          }
+        
 
         // Проверяем, что модель успешно загрузилась
         if (!model) {
@@ -171,9 +177,9 @@ async function initializeBackend() {
 }
 
 async function main() {
-    console.log("Initializing WebAssembly backend...");
+    console.log("Initializing backend...");
     await initializeBackend();
-    console.log("WebAssembly backend initialized.");
+    console.log("Backend initialized.");
 
     console.log("Setting up camera...");
     await setupCamera();

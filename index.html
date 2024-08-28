@@ -28,6 +28,11 @@
                 size = 512;
                 output_block = 3;
                 break;
+            case searchParams.includes('?Daniil'):
+                path = 'Daniils_tf_model/model.json';
+                size = 512;
+                output_block = 3;
+                break;
             case searchParams.includes('?teed16_json'):
                 path = 'teed_model_tfjs_16/model.json';
                 size = 352;
@@ -88,6 +93,26 @@
                 path = 'tflite_models/ted_model_pruned_dynamic_range.tflite';
                 size = 352;
                 output_block = 'StatefulPartitionedCall:0';
+                break;
+                case searchParams.includes('?teed_tflite_new_32_0'):
+                path = 'tflite_models/ted_model_new.tflite';
+                size = 512;
+                output_block = 'StatefulPartitionedCall_1:0';
+                break;
+                case searchParams.includes('?teed_tflite_new_32_1'):
+                path = 'tflite_models/ted_model_new.tflite';
+                size = 512;
+                output_block = 'StatefulPartitionedCall_1:1';
+                break;
+                case searchParams.includes('?teed_tflite_new_32_2'):
+                path = 'tflite_models/ted_model_new.tflite';
+                size = 512;
+                output_block = 'StatefulPartitionedCall_1:2';
+                break;
+            case searchParams.includes('?teed_tflite_new_32_3'):
+                path = 'tflite_models/ted_model_new.tflite';
+                size = 512;
+                output_block = 'StatefulPartitionedCall_1:3';
                 break;
             case searchParams.includes('?teed_tflite_32'):
                 path = 'tflite_models/ted_model.tflite';
