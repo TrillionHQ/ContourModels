@@ -38,12 +38,17 @@
                 size = 352;
                 output_block = 3;
                 break;
-                case searchParams.includes('?teed_tfl_ex_onnx_output1_optim_clust'):
+            case searchParams.includes('?teed_tfl_ex_onnx_output2_clust'):
+                path = 'ex_onnx_pruned_optimized_clustered2/model.json';
+                size = 352;
+                output_block = 3;
+                break;
+            case searchParams.includes('?teed_tfl_ex_onnx_output1_clust'):
                 path = 'ex_onnx_pruned_optimized_clustered/model.json';
                 size = 352;
                 output_block = 3;
                 break;
-                case searchParams.includes('?teed_tfl_ex_onnx_output1_optim'):
+            case searchParams.includes('?teed_tfl_ex_onnx_output1_optim'):
                 path = 'ex_onnx_pruned_optimized/model.json';
                 size = 352;
                 output_block = 3;
