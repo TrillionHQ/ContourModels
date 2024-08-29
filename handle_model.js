@@ -21,8 +21,8 @@ async function loadModel() {
     try {
         if (!path.includes('tflite') && !path.includes('Daniils')) {
             model = await tf.loadGraphModel(path);
-        } 
-        else if(!path.includes('Daniils')){
+        }
+        else if (!path.includes('Daniils')) {
             const response = await fetch(path);
             if (!response.ok) {
                 throw new Error(`Failed to fetch model from ${path}: ${response.statusText}`);
@@ -30,11 +30,10 @@ async function loadModel() {
             const buffer = await response.arrayBuffer();
             model = await tflite.loadTFLiteModel(buffer);
         }
-          else
-           {
+        else {
             model = await tf.loadLayersModel(path);
-          }
-        
+        }
+
 
         // Проверяем, что модель успешно загрузилась
         if (!model) {
@@ -59,7 +58,7 @@ function preprocessImage(imageData) {
         inputTensor = inputTensor.sub(mean);
 
         // Transpose the tensor
-        if (!path.includes('tflite')) {
+        if ((!path.includes('tflite')) && (!path.includes('keras'))) {
             inputTensor = inputTensor.transpose([2, 0, 1]);
         }
         inputTensor = inputTensor.expandDims(0);
@@ -83,7 +82,12 @@ async function detectEdges(model) {
     const startTime1 = performance.now();
     let outputTensor = null
     if (!path.includes('tflite')) {
-        outputTensor = await model.execute({ input: inputTensor });
+        if (path.includes('keras')) {
+            outputTensor = await model.execute({ 'input_layer_9:0': inputTensor })
+        }
+        else {
+            outputTensor = await model.execute({ input: inputTensor });
+        }
     }
     else {
         outputTensor = await model.predict(inputTensor);
@@ -129,35 +133,36 @@ async function detectEdges(model) {
         return tf.image.resizeBilinear(reshapedOutput.expandDims(2), [canvas.height, canvas.width]);
     });
 
-    const resizedOutputData = resizedOutput.squeeze().arraySync();
 
-    // Clean up the remaining tensors
-    tf.dispose([normalizedOutput, scaledOutput, reshapedOutput, resizedOutput]);
+    const binaryOutput = tf.tidy(() => {
+        const threshold = 1;
+        return resizedOutput.greater(tf.scalar(threshold)).mul(tf.scalar(255)).cast('int32');
+    });
 
-    //const endTime2 = performance.now();
-    //console.log(`Execution time resizing output: ${endTime2 - startTime2} milliseconds`);
+    const binaryOutputData = binaryOutput.squeeze().arraySync();
+
+    // Clean up intermediate tensors
+    tf.dispose([normalizedOutput, scaledOutput, reshapedOutput, resizedOutput, binaryOutput]);
+
+    // Convert to ImageData
     const finalOutputData = new Uint8ClampedArray(canvas.width * canvas.height * 4);
     for (let i = 0; i < canvas.height; i++) {
         for (let j = 0; j < canvas.width; j++) {
-            const pixelValue = 255 - resizedOutputData[i][j];
+            const pixelValue = 255 - binaryOutputData[i][j];
             const index = (i * canvas.width + j) * 4;
             finalOutputData[index] = pixelValue;
             finalOutputData[index + 1] = pixelValue;
             finalOutputData[index + 2] = pixelValue;
-            finalOutputData[index + 3] = 255;
+            finalOutputData[index + 3] = 255; // Full opacity
         }
     }
+
     const outputImageData = new ImageData(finalOutputData, canvas.width, canvas.height);
     context.putImageData(outputImageData, 0, 0);
 
     // Dispose tensors to free up memory
     inputTensor.dispose();
-    resizedOutput.dispose();
-    /* if (Array.isArray(outputTensor)) {
-        outputTensor.forEach(tensor => tensor.dispose());
-    } else {
-        outputTensor.dispose();
-    } */
+
 
     requestAnimationFrame(() => detectEdges(model));
 }

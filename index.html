@@ -114,6 +114,26 @@
                 size = 512;
                 output_block = 'StatefulPartitionedCall_1:3';
                 break;
+                case searchParams.includes('?teed_keras_32_0'):
+                path = 'tfteed_keras/model.json';
+                size = 512;
+                output_block = 0;
+                break;
+                case searchParams.includes('?teed_keras_32_1'):
+                path = 'tfteed_keras/model.json';
+                size = 512;
+                output_block = 1;
+                break;
+                case searchParams.includes('?teed_keras_32_2'):
+                path = 'tfteed_keras/model.json';
+                size = 512;
+                output_block = 2;
+                break;
+            case searchParams.includes('?teed_keras_32_3'):
+                path = 'tfteed_keras/model.json';
+                size = 512;
+                output_block = 3;
+                break;
             case searchParams.includes('?teed_tflite_32'):
                 path = 'tflite_models/ted_model.tflite';
                 size = 352;

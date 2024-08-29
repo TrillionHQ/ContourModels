@@ -29,3 +29,7 @@
 - goto http://127.0.0.1:8080/?teed_tflite_32_0 for output0 float32 subgraph of Teed ex tensorflow float32 model
 - goto http://127.0.0.1:8080/?teed_tflite_16_0 for output0 float16 subgraph of Teed ex tensorflow float32 model
 - goto http://127.0.0.1:8080/?teed_tflite_dr_0 for output0 dynamic range subgraph of Teed ex tensorflow float32 model
+
+# Daniils keras model
+
+- goto http://127.0.0.1:8080/?teed_keras_32_3 , where the last number is the channel (0-3)
