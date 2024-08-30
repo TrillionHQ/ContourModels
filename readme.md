@@ -33,3 +33,4 @@
 # Daniils keras model
 
 - goto http://127.0.0.1:8080/?teed_keras_32_3 , where the last number is the channel (0-3)
+- goto http://127.0.0.1:8080/?teed_mish_keras_32_3 , where the last number is the channel (0-3)
